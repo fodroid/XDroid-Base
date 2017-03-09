@@ -16,12 +16,16 @@ public abstract class SimpleListAdapter<T, H> extends XListAdapter<T> {
         super(context);
     }
 
-    public SimpleListAdapter(Context context, ListItemCallback<T> callback) {
+    public SimpleListAdapter(Context context, ItemCallback<T> callback) {
         super(context, callback);
     }
 
     public SimpleListAdapter(Context context, List<T> data) {
         super(context, data);
+    }
+
+    public SimpleListAdapter(Context context, List<T> data, ItemCallback<T> callback) {
+        super(context, data, callback);
     }
 
     @Override

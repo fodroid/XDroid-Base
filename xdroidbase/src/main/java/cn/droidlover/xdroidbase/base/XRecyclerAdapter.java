@@ -2,40 +2,39 @@ package cn.droidlover.xdroidbase.base;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by wanglei on 2016/12/1.
+ * Created by shihao on 2017/3/9.
  */
 
-public abstract class XListAdapter<T> extends BaseAdapter {
-
+public abstract class XRecyclerAdapter<T, F extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<F> {
+    protected Context context;
     protected List<T> data = new ArrayList<T>();
     private ItemCallback itemCallback;
-    protected Context context;
 
-    public XListAdapter(Context context) {
+    public XRecyclerAdapter(Context context) {
         this.context = context;
     }
 
-    public XListAdapter(Context context, ItemCallback<T> callback) {
-        this(context);
+    public XRecyclerAdapter(Context context, ItemCallback<T> callback) {
+        this.context = context;
         this.itemCallback = callback;
     }
 
-    public XListAdapter(Context context, List<T> data) {
+    public XRecyclerAdapter(Context context, List<T> data) {
         this.context = context;
         this.data.clear();
         this.data.addAll(data);
     }
 
-    public XListAdapter(Context context, List<T> data, ItemCallback<T> callback) {
+    public XRecyclerAdapter(Context context, List<T> data, ItemCallback<T> callback) {
         this.context = context;
         this.data.clear();
         this.data.addAll(data);
@@ -55,7 +54,6 @@ public abstract class XListAdapter<T> extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-
     /**
      * 设置数据源
      *
@@ -67,19 +65,19 @@ public abstract class XListAdapter<T> extends BaseAdapter {
         }
     }
 
-
     /**
      * 添加数据
      *
      * @param data
      */
     public void addData(List<T> data) {
+        int preSize = this.data.size();
         if (data != null && data.size() > 0) {
             this.data.addAll(data);
+            notifyItemRangeInserted(preSize, this.data.size());
         }
         notifyDataSetChanged();
     }
-
 
     /**
      * 添加数据
@@ -90,6 +88,7 @@ public abstract class XListAdapter<T> extends BaseAdapter {
         addData(Arrays.asList(data));
     }
 
+
     /**
      * 删除元素
      *
@@ -97,7 +96,9 @@ public abstract class XListAdapter<T> extends BaseAdapter {
      */
     public void removeElement(T element) {
         if (data.contains(element)) {
+            int position = data.indexOf(element);
             data.remove(element);
+            notifyItemRemoved(position);
             notifyDataSetChanged();
         }
     }
@@ -110,6 +111,7 @@ public abstract class XListAdapter<T> extends BaseAdapter {
     public void removeElement(int position) {
         if (data != null && data.size() > position) {
             data.remove(position);
+            notifyItemRemoved(position);
             notifyDataSetChanged();
         }
     }
@@ -153,7 +155,7 @@ public abstract class XListAdapter<T> extends BaseAdapter {
     public void updateElement(T element, int position) {
         if (position >= 0 && data.size() > position) {
             data.set(position, element);
-            notifyDataSetChanged();
+            notifyItemChanged(position);
         }
     }
 
@@ -165,7 +167,7 @@ public abstract class XListAdapter<T> extends BaseAdapter {
     public void addElement(T element) {
         if (element != null) {
             data.add(element);
-            notifyDataSetChanged();
+            notifyItemInserted(this.data.size());
         }
     }
 
@@ -178,7 +180,7 @@ public abstract class XListAdapter<T> extends BaseAdapter {
     public void addElement(int position, T element) {
         if (element != null) {
             data.add(position, element);
-            notifyDataSetChanged();
+            notifyItemInserted(position);
         }
     }
 
@@ -289,6 +291,7 @@ public abstract class XListAdapter<T> extends BaseAdapter {
         return data;
     }
 
+
     public void setItemClick(ItemCallback recItemClick) {
         this.itemCallback = recItemClick;
     }
@@ -305,23 +308,18 @@ public abstract class XListAdapter<T> extends BaseAdapter {
 
 
     @Override
-    public int getCount() {
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public abstract F onCreateViewHolder(ViewGroup parent, int viewType);
+
+    @Override
+    public abstract void onBindViewHolder(F holder, int position);
+
+    @Override
+    public int getItemCount() {
         return data == null || data.isEmpty() ? 0 : data.size();
     }
-
-    @Override
-    public Object getItem(int position) {
-        return data != null ? data.get(position) : null;
-    }
-
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public abstract View getView(int position, View convertView,
-                                 ViewGroup parent);
-
-
 }
