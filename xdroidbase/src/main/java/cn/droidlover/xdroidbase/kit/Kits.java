@@ -1123,4 +1123,132 @@ public class Kits {
 
 
     }
+
+    /**
+     * 常用正则表达式匹配
+     *
+     * @author shihao
+     */
+    public static class PatternMatcher {
+
+        /**
+         * 是否为国内移动手机号
+         *
+         * @param mobile
+         * @return
+         */
+        public static boolean isMobileNumber(String mobile) {
+            Pattern p = Pattern.compile("^1(3|5|7|8)\\d{9}$");
+            Matcher m = p.matcher(mobile);
+            return m.matches();
+        }
+
+        /**
+         * 是否为电子邮箱地址
+         *
+         * @param email
+         * @return
+         */
+        public static boolean isEmail(String email) {
+            Pattern p = Pattern.compile("^\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}$");
+            Matcher m = p.matcher(email);
+            return m.matches();
+        }
+
+        /**
+         * 是否为网址
+         *
+         * @param url
+         * @return
+         */
+        public static boolean isUrl(String url) {
+            Pattern p = Pattern.compile("^[a-zA-z]+://[^\\s]*$");
+            Matcher m = p.matcher(url);
+            return m.matches();
+        }
+
+        /**
+         * 是否为身份证号
+         *
+         * @param num
+         * @return
+         */
+        public static boolean isIDNumber(String num) {
+            Pattern p = Pattern.compile("^\\d{15}|\\d{17}[0-9Xx]$");
+            Matcher m = p.matcher(num);
+            return m.matches();
+        }
+
+        /**
+         * 是否为QQ号
+         *
+         * @param qq
+         * @return
+         */
+        public static boolean isQQNumber(String qq) {
+            Pattern p = Pattern.compile("^[1-9][0-9]{4,}$");
+            Matcher m = p.matcher(qq);
+            return m.matches();
+        }
+
+        /**
+         * 时候为邮政编码
+         *
+         * @param code
+         * @return
+         */
+        public static boolean isPostalCode(String code) {
+            Pattern p = Pattern.compile("^[1-9][0-9]{5}$");
+            Matcher m = p.matcher(code);
+            return m.matches();
+        }
+
+        /**
+         * 是否为ipv4地址
+         *
+         * @param ip
+         * @return
+         */
+        public static boolean isIPV4Address(String ip) {
+            Pattern p = Pattern.compile("^((?:(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d)))\\.){3}" +
+                    "(?:25[0-5]|2[0-4]\\d|((1\\d{2})|([1-9]?\\d))))$");
+            Matcher m = p.matcher(ip);
+            return m.matches();
+        }
+
+
+        /**
+         * 从html中找出img标签中的图片地址
+         *
+         * @param html
+         * @return
+         */
+        public static List<String> getImgUrlFromHtml(String html) {
+            List<String> results = new ArrayList<>();
+            Pattern p = Pattern.compile("<img.*?src.*?=\"(.*?)\"", Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(html);
+            while (m.find()) {
+                results.add(m.group(1));
+            }
+            return results;
+        }
+
+        /**
+         * 从html中匹配出节点element对应属性attr的值
+         *
+         * @param element 节点名
+         * @param attr    属性名
+         * @param html    待匹配数据
+         * @return
+         */
+        public static List<String> getElementAttributeFromHtml(String element, String attr, String html) {
+            List<String> results = new ArrayList<>();
+            Pattern p = Pattern.compile("<" + element + ".*?" + attr + ".*?\"(.*?)\"", Pattern.CASE_INSENSITIVE);
+            Matcher m = p.matcher(html);
+            while (m.find()) {
+                results.add(m.group(1));
+            }
+            return results;
+        }
+    }
 }
