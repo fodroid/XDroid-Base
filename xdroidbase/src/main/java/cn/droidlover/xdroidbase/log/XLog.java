@@ -15,9 +15,11 @@ public class XLog {
     private static boolean LOG = true;
     private static String TAG_ROOT = "XDroid";
 
-    public static void init(boolean isLog, String logTag) {
-        LOG = isLog;
-        TAG_ROOT = logTag;
+    public static void init(Boolean isLog, String logTag) {
+        if (isLog != null)
+            LOG = isLog.booleanValue();
+        if (TextUtils.isEmpty(logTag))
+            TAG_ROOT = logTag;
     }
 
     public static void json(String json) {

@@ -38,13 +38,18 @@ public interface ILoader {
 
         public int loadingResId = RES_NONE;        //加载中的资源id
         public int loadErrorResId = RES_NONE;      //加载失败的资源id
-        public ImageView.ScaleType scaleType = null;
+        public ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
 
         public static final int RES_NONE = -1;
 
+        private static Options defOptions;
+
+        public static void initDefaultOptions(int loadingResId, int loadErrorResId) {
+            defOptions = new Options(loadingResId, loadErrorResId);
+        }
+
         public static Options defaultOptions() {
-            return new Options(XDroidBaseConf.getInstance().getILLoadingRes(), XDroidBaseConf.getInstance()
-                    .getILErrorRes());
+            return defOptions;
         }
 
         public Options(int loadingResId, int loadErrorResId) {

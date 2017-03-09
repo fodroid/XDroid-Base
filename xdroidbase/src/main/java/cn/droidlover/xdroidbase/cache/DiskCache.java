@@ -28,9 +28,13 @@ public class DiskCache implements ICache {
 
     public static final long NO_CACHE = -1L;
 
-    private String CACHE_NAME = XDroidBaseConf.getInstance().getCacheDiskDir();
+    private static String CACHE_NAME = "cache";
     private static DiskCache instance;
 
+    public static void init(String cacheName) {
+        if (TextUtils.isEmpty(cacheName))
+            CACHE_NAME = cacheName;
+    }
 
     private DiskCache(Context context) {
         compile = Pattern.compile(REGEX);

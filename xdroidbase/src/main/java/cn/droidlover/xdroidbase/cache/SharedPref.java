@@ -2,6 +2,7 @@ package cn.droidlover.xdroidbase.cache;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import cn.droidlover.xdroidbase.XDroidBaseConf;
 
@@ -14,9 +15,14 @@ public class SharedPref implements ICache {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
-    private String SP_NAME = XDroidBaseConf.getInstance().getCacheSpName();
+    private static String SP_NAME = "config";
 
     private static SharedPref instance;
+
+    public static void init(String spName) {
+        if (TextUtils.isEmpty(spName))
+            SP_NAME = spName;
+    }
 
     private SharedPref(Context context) {
         sharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);

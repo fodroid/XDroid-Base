@@ -20,7 +20,8 @@ public class ILFactory {
     }
 
     public static void setILoader(ILoader iLoader) {
-        loader = iLoader;
+        if (iLoader != null)
+            loader = iLoader;
     }
 
 }

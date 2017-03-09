@@ -4,6 +4,9 @@ package cn.droidlover.xdroidbase;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.droidlover.xdroidbase.cache.DiskCache;
+import cn.droidlover.xdroidbase.cache.SharedPref;
+import cn.droidlover.xdroidbase.imageloader.ILFactory;
 import cn.droidlover.xdroidbase.imageloader.ILoader;
 import cn.droidlover.xdroidbase.log.XLog;
 import cn.droidlover.xdroidbase.router.Router;
@@ -114,5 +117,9 @@ public class XDroidBaseConf {
     public void build() {
         Router.init(routerLaunchAnimEnter, routerLaunchAnimExit, routerPopAnimEnter, routerPopAnimExit);
         XLog.init(isLog, logTag);
+        SharedPref.init(cacheSpName);
+        DiskCache.init(cacheDiskDir);
+        ILoader.Options.initDefaultOptions(ilLoadingRes, ilErrorRes);
+        ILFactory.setILoader(loader);
     }
 }
