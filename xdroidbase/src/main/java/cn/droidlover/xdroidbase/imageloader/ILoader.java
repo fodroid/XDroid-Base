@@ -49,6 +49,8 @@ public interface ILoader {
         }
 
         public static Options defaultOptions() {
+            if (defOptions == null)
+                defOptions = new Options(RES_NONE, RES_NONE);
             return defOptions;
         }
 
