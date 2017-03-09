@@ -14,7 +14,7 @@ public class SharedPref implements ICache {
     private static SharedPreferences sharedPreferences;
     private static SharedPreferences.Editor editor;
 
-    private static final String SP_NAME = XDroidBaseConf.getInstance().getCacheSpName();
+    private String SP_NAME = XDroidBaseConf.getInstance().getCacheSpName();
 
     private static SharedPref instance;
 

@@ -28,7 +28,7 @@ public class DiskCache implements ICache {
 
     public static final long NO_CACHE = -1L;
 
-    private static final String CACHE_NAME = XDroidBaseConf.getInstance().getCacheDiskDir();
+    private String CACHE_NAME = XDroidBaseConf.getInstance().getCacheDiskDir();
     private static DiskCache instance;
 
 
