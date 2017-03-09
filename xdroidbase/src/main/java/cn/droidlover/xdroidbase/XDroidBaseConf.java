@@ -1,6 +1,9 @@
 package cn.droidlover.xdroidbase;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cn.droidlover.xdroidbase.imageloader.ILoader;
 import cn.droidlover.xdroidbase.router.Router;
 
@@ -59,6 +62,12 @@ public class XDroidBaseConf {
         return this;
     }
 
+    public XDroidBaseConf setRouterLaunchAnim(int launchAnimEnter, int launchAnimExit) {
+        setRouterLaunchAnimEnter(launchAnimEnter);
+        setRouterLaunchAnimExit(launchAnimExit);
+        return this;
+    }
+
     public XDroidBaseConf setRouterLaunchAnimEnter(int launchAnimEnter) {
         this.ROUTER_LAUNCH_ANIM_ENTER = launchAnimEnter;
         return this;
@@ -66,6 +75,12 @@ public class XDroidBaseConf {
 
     public XDroidBaseConf setRouterLaunchAnimExit(int launchAnimExit) {
         this.ROUTER_LAUNCH_ANIM_EXIT = launchAnimExit;
+        return this;
+    }
+
+    public XDroidBaseConf setRouterPopAnim(int popAnimEnter, int popAnimExit) {
+        setRouterPopAnimEnter(popAnimEnter);
+        setRouterPopAnimExit(popAnimExit);
         return this;
     }
 
