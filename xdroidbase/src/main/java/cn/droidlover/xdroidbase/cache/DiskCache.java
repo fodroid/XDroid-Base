@@ -28,12 +28,14 @@ public class DiskCache implements ICache {
 
     public static final long NO_CACHE = -1L;
 
+    private static final String CACHE_NAME = XDroidBaseConf.getInstance().getCacheDiskDir();
     private static DiskCache instance;
+
 
     private DiskCache(Context context) {
         compile = Pattern.compile(REGEX);
         try {
-            File cacheDir = getDiskCacheDir(context, getCacheDir());
+            File cacheDir = getDiskCacheDir(context, CACHE_NAME);
             if (!cacheDir.exists()) {
                 cacheDir.mkdirs();
             }
@@ -156,10 +158,5 @@ public class DiskCache implements ICache {
         }
         return new File(cachePath + File.separator + dirName);
     }
-
-    private String getCacheDir() {
-        return XDroidBaseConf.getInstance().getCacheDiskDir();
-    }
-
 
 }
