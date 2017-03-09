@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.droidlover.xdroidbase.imageloader.ILoader;
+import cn.droidlover.xdroidbase.log.XLog;
 import cn.droidlover.xdroidbase.router.Router;
 
 /**
@@ -13,22 +14,23 @@ import cn.droidlover.xdroidbase.router.Router;
 
 public class XDroidBaseConf {
     // #log
-    private boolean LOG = true;
-    private String LOG_TAG = "XDroid";
+    private boolean isLog = true;
+    private String logTag = "XDroid";
 
     // #cache
-    private String CACHE_SP_NAME = "config";
-    private String CACHE_DISK_DIR = "cache";
+    private String cacheSpName = "config";
+    private String cacheDiskDir = "cache";
 
     // #router
-    private int ROUTER_LAUNCH_ANIM_ENTER = Router.RES_NONE;
-    private int ROUTER_LAUNCH_ANIM_EXIT = Router.RES_NONE;
-    private int ROUTER_POP_ANIM_ENTER = Router.RES_NONE;
-    private int ROUTER_POP_ANIM_EXIT = Router.RES_NONE;
+    private int routerLaunchAnimEnter = Router.RES_NONE;
+    private int routerLaunchAnimExit = Router.RES_NONE;
+    private int routerPopAnimEnter = Router.RES_NONE;
+    private int routerPopAnimExit = Router.RES_NONE;
 
     // #imageloader
-    private int IL_LOADING_RES = ILoader.Options.RES_NONE;
-    private int IL_ERROR_RES = ILoader.Options.RES_NONE;
+    private int ilLoadingRes = ILoader.Options.RES_NONE;
+    private int ilErrorRes = ILoader.Options.RES_NONE;
+    private ILoader loader;
 
     private XDroidBaseConf() {
 
@@ -43,22 +45,22 @@ public class XDroidBaseConf {
     }
 
     public XDroidBaseConf setLog(boolean log) {
-        this.LOG = log;
+        this.isLog = log;
         return this;
     }
 
     public XDroidBaseConf setDefLogTag(String defLogTag) {
-        this.LOG_TAG = defLogTag;
+        this.logTag = defLogTag;
         return this;
     }
 
     public XDroidBaseConf setCacheSpName(String cacheSpName) {
-        this.CACHE_SP_NAME = cacheSpName;
+        this.cacheSpName = cacheSpName;
         return this;
     }
 
     public XDroidBaseConf setCacheDiskDir(String dir) {
-        this.CACHE_DISK_DIR = dir;
+        this.cacheDiskDir = dir;
         return this;
     }
 
@@ -69,12 +71,12 @@ public class XDroidBaseConf {
     }
 
     public XDroidBaseConf setRouterLaunchAnimEnter(int launchAnimEnter) {
-        this.ROUTER_LAUNCH_ANIM_ENTER = launchAnimEnter;
+        this.routerLaunchAnimEnter = launchAnimEnter;
         return this;
     }
 
     public XDroidBaseConf setRouterLaunchAnimExit(int launchAnimExit) {
-        this.ROUTER_LAUNCH_ANIM_EXIT = launchAnimExit;
+        this.routerLaunchAnimExit = launchAnimExit;
         return this;
     }
 
@@ -85,63 +87,32 @@ public class XDroidBaseConf {
     }
 
     public XDroidBaseConf setRouterPopAnimEnter(int popAnimEnter) {
-        this.ROUTER_POP_ANIM_ENTER = popAnimEnter;
+        this.routerPopAnimEnter = popAnimEnter;
         return this;
     }
 
     public XDroidBaseConf setRouterPopAnimExit(int popAnimExit) {
-        this.ROUTER_POP_ANIM_EXIT = popAnimExit;
+        this.routerPopAnimExit = popAnimExit;
         return this;
     }
 
     public XDroidBaseConf setILLoadingRes(int loadingRes) {
-        this.IL_LOADING_RES = loadingRes;
+        this.ilLoadingRes = loadingRes;
         return this;
     }
 
     public XDroidBaseConf setILErrorRes(int errorRes) {
-        this.IL_ERROR_RES = errorRes;
+        this.ilErrorRes = errorRes;
         return this;
     }
 
-
-    public boolean getLog() {
-        return LOG;
+    public XDroidBaseConf setILoader(ILoader iLoader) {
+        loader = iLoader;
+        return this;
     }
 
-    public String getDefLogTag() {
-        return LOG_TAG;
-    }
-
-    public String getCacheSpName() {
-        return CACHE_SP_NAME;
-    }
-
-    public String getCacheDiskDir() {
-        return CACHE_DISK_DIR;
-    }
-
-    public int getRouterLaunchAnimEnter() {
-        return ROUTER_LAUNCH_ANIM_ENTER;
-    }
-
-    public int getRouterLaunchAnimExit() {
-        return ROUTER_LAUNCH_ANIM_EXIT;
-    }
-
-    public int getRouterPopAnimEnter() {
-        return ROUTER_POP_ANIM_ENTER;
-    }
-
-    public int getRouterPopAnimExit() {
-        return ROUTER_POP_ANIM_EXIT;
-    }
-
-    public int getILLoadingRes() {
-        return IL_LOADING_RES;
-    }
-
-    public int getILErrorRes() {
-        return IL_ERROR_RES;
+    public void build() {
+        Router.init(routerLaunchAnimEnter, routerLaunchAnimExit, routerPopAnimEnter, routerPopAnimExit);
+        XLog.init(isLog, logTag);
     }
 }

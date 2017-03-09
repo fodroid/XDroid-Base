@@ -19,5 +19,8 @@ public class ILFactory {
         return loader;
     }
 
+    public static void setILoader(ILoader iLoader) {
+        loader = iLoader;
+    }
 
 }

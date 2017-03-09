@@ -24,12 +24,21 @@ public class Router {
     private Bundle data;
     private ActivityOptionsCompat options;
     private int requestCode = -1;
-    private int enterAnim = XDroidBaseConf.getInstance().getRouterLaunchAnimEnter();
-    private int exitAnim = XDroidBaseConf.getInstance().getRouterLaunchAnimExit();
+    private static int launchEnterAnim = Router.RES_NONE;
+    private static int launchExitAnim = Router.RES_NONE;
+    private static int popEnterAnim = Router.RES_NONE;
+    private static int popExitAnim = Router.RES_NONE;
 
     public static final int RES_NONE = -1;
 
     private static RouterCallback callback;
+
+    public static void init(int launchAnimEnter, int launchAnimExit, int popAnimEnter, int popAnimExit) {
+        launchEnterAnim = launchAnimEnter;
+        launchExitAnim = launchAnimExit;
+        popEnterAnim = popAnimEnter;
+        popExitAnim = popAnimExit;
+    }
 
     private Router() {
         intent = new Intent();
@@ -154,8 +163,8 @@ public class Router {
     }
 
     public Router anim(int enterAnim, int exitAnim) {
-        this.enterAnim = enterAnim;
-        this.exitAnim = exitAnim;
+        launchEnterAnim = enterAnim;
+        launchExitAnim = exitAnim;
         return this;
     }
 
@@ -178,8 +187,8 @@ public class Router {
                         from.startActivityForResult(intent, requestCode);
                     }
 
-                    if (enterAnim > 0 && exitAnim > 0) {
-                        from.overridePendingTransition(enterAnim, exitAnim);
+                    if (launchEnterAnim > 0 && launchExitAnim > 0) {
+                        from.overridePendingTransition(launchEnterAnim, launchExitAnim);
                     }
                 } else {
                     if (requestCode < 0) {

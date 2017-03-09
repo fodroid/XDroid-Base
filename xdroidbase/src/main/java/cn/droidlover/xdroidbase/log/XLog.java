@@ -12,8 +12,13 @@ import cn.droidlover.xdroidbase.XDroidBaseConf;
 
 public class XLog {
 
-    public static boolean LOG = XDroidBaseConf.getInstance().getLog();
-    public static String TAG_ROOT = XDroidBaseConf.getInstance().getDefLogTag();
+    private static boolean LOG = true;
+    private static String TAG_ROOT = "XDroid";
+
+    public static void init(boolean isLog, String logTag) {
+        LOG = isLog;
+        TAG_ROOT = logTag;
+    }
 
     public static void json(String json) {
         json(Log.DEBUG, null, json);
