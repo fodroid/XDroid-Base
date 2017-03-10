@@ -49,23 +49,23 @@ XDroid交流群：**153569290**
 
 # Get Started
 
-使用，仅需四步：
+### 方式一使用，仅需四步：
 
-### step1  
+#### step1  
 
 clone 'XDroid-Base'库到本地:
 ```groovy
 git clone https://github.com/fodroid/XDroid-Base.git
 ```
 
-### step2
+#### step2
 
 将`xdroidbase`作为依赖库，在您的app module 中 添加如下依赖:
 ```groovy
 compile project(':xdroidbase')
 ```
 
-### step3
+#### step3
 
 拷贝`conf.gradle`到您的项目根目录，并修改项目gradle文件下引入：
 ```groovy
@@ -83,13 +83,13 @@ allprojects {
 }
 ```
 
-### step4
+#### step4
 
 调用`XDroidBaseConf`配置类，主要针对log、cache、router、imageloader。若采用默认配置，此步骤可略过.
 
-## 第二种方式，通过JitPack引入
+### 第二种方式，通过JitPack引入
 
-### step1 在根目录的gradle文件中配置:
+#### step1 在根目录的gradle文件中配置:
 ```groovy
 allprojects {
     repositories {
@@ -99,7 +99,7 @@ allprojects {
 }
 ```
 
-### step2 添加依赖:
+#### step2 添加依赖:
 ```groovy
 dependencies {
 	        compile 'com.github.fodroid:XDroid-Base:v1.3'
