@@ -33,7 +33,7 @@ XDroid交流群：**153569290**
 
 # 特性
 
-**XDroid-Databinding**主要有这些特性：
+**XDroid-Base**主要有这些特性：
 
 * 提供`SimpleRecAdapter`、`SimpleListAdapte`、`XRecyclerAdapter`、`XListAdapter`等基类，可快速进行开发
 * 实现了Memory、Disk、SharedPreferences三种方式的缓存，可自由扩展
