@@ -16,7 +16,7 @@ public class ToastManager {
 
     private ToastManager(Context context) {
         if (mToast == null)
-            mToast = new Toast(context);
+            mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
     }
 
     public static ToastManager getInstance(Context context) {
