@@ -44,6 +44,16 @@ XDroid交流群：**153569290**
 * 内置加密工具类 `XCodec`，你想要的加密姿势都有
 * 未引入三方库
 
+**简单配置项**
+```java
+XDroidBaseConf.getInstance()
+                .setCacheSpName("cache")//SharedPreferences文件名
+                .setCacheDiskDir("xdroid")//本地缓存的文件夹名
+                .setDefLogTag("XDroid")//log默认的tag
+                .setLog(BuildConfig.DEBUG)//是否输出log
+                .build();
+```
+
 详细说明请前往[wiki](https://github.com/fodroid/XDroid-Base/wiki)
 
 # 更新
