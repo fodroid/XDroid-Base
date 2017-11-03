@@ -14,7 +14,7 @@ import java.util.List;
  * Created by shihao on 2017/3/9.
  */
 
-public abstract class XRecyclerAdapter<T, F extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<F> {
+public abstract class XRecyclerAdapter<T, V extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<V> {
     protected Context context;
     protected List<T> data = new ArrayList<T>();
     private ItemCallback itemCallback;
@@ -315,10 +315,10 @@ public abstract class XRecyclerAdapter<T, F extends RecyclerView.ViewHolder> ext
     }
 
     @Override
-    public abstract F onCreateViewHolder(ViewGroup parent, int viewType);
+    public abstract V onCreateViewHolder(ViewGroup parent, int viewType);
 
     @Override
-    public abstract void onBindViewHolder(F holder, int position);
+    public abstract void onBindViewHolder(V holder, int position);
 
     @Override
     public int getItemCount() {

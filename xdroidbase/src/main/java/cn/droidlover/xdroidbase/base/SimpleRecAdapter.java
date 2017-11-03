@@ -12,7 +12,7 @@ import java.util.List;
  * Created by wanglei on 2016/11/29.
  */
 
-public abstract class SimpleRecAdapter<T, H extends RecyclerView.ViewHolder> extends XRecyclerAdapter<T, H> {
+public abstract class SimpleRecAdapter<T, V extends RecyclerView.ViewHolder> extends XRecyclerAdapter<T, V> {
 
     public SimpleRecAdapter(Context context) {
         super(context);
@@ -31,12 +31,12 @@ public abstract class SimpleRecAdapter<T, H extends RecyclerView.ViewHolder> ext
     }
 
     @Override
-    public H onCreateViewHolder(ViewGroup parent, int viewType) {
+    public V onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(getLayoutId(), parent, false);
         return newViewHolder(view);
     }
 
-    public abstract H newViewHolder(View itemView);
+    public abstract V newViewHolder(View itemView);
 
     public abstract int getLayoutId();
 
