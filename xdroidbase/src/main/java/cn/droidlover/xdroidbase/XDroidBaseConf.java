@@ -98,17 +98,17 @@ public class XDroidBaseConf {
         this.routerPopAnimExit = popAnimExit;
         return this;
     }
-
+    @Deprecated
     public XDroidBaseConf setILLoadingRes(int loadingRes) {
         this.ilLoadingRes = loadingRes;
         return this;
     }
-
+    @Deprecated
     public XDroidBaseConf setILErrorRes(int errorRes) {
         this.ilErrorRes = errorRes;
         return this;
     }
-
+    @Deprecated
     public XDroidBaseConf setILoader(ILoader iLoader) {
         loader = iLoader;
         return this;

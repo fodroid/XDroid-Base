@@ -3,6 +3,7 @@ package cn.droidlover.xdroidbase.imageloader;
 /**
  * Created by wanglei on 2016/11/28.
  */
+@Deprecated
 public class ILFactory {
 
     private static ILoader loader;

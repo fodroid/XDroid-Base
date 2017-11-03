@@ -310,7 +310,7 @@ public abstract class XListAdapter<T> extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public T getItem(int position) {
         return data != null ? data.get(position) : null;
     }
 

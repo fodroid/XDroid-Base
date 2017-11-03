@@ -37,15 +37,20 @@ XDroid交流群：**153569290**
 
 * 提供`SimpleRecAdapter`、`SimpleListAdapte`、`XRecyclerAdapter`、`XListAdapter`等基类，可快速进行开发
 * 实现了Memory、Disk、SharedPreferences三种方式的缓存，可自由扩展
-* 内置`Glide`，可自由切换其他图片加载库
 * 可输出漂亮的`Log`，支持Json、Xml、Throwable等，蝇量级实现
 * 内置链式路由
 * 内置`Toast`工具类
 * 内置常用工具类：`package`、`random`、`file`...,提供的都是非常常用的方法
 * 内置加密工具类 `XCodec`，你想要的加密姿势都有
-* 引入三方库极少
+* 未引入三方库
 
 详细说明请前往[wiki](https://github.com/fodroid/XDroid-Base/wiki)
+
+# 更新
+### v1.5
+* 更新support版本
+* 移除关联库，移除glide封装，功能更加纯粹
+* ItemCallback新增方法，adapter中新增方法
 
 # Get Started
 
@@ -77,7 +82,6 @@ apply from: "conf.gradle"
 ```groovy
 allprojects {
     repositories {
-        jcenter()
         maven { url "https://jitpack.io" }
     }
 }
@@ -85,7 +89,7 @@ allprojects {
 
 #### step4
 
-调用`XDroidBaseConf`配置类，主要针对log、cache、router、imageloader。若采用默认配置，此步骤可略过.
+调用`XDroidBaseConf`配置类，主要针对log、cache、router。若采用默认配置，此步骤可略过.
 
 ### 第二种方式，通过JitPack引入
 
@@ -93,7 +97,6 @@ allprojects {
 ```groovy
 allprojects {
     repositories {
-        jcenter()
         maven { url "https://jitpack.io" }
     }
 }
@@ -102,7 +105,7 @@ allprojects {
 #### step2 添加依赖:
 ```groovy
 dependencies {
-	        compile 'com.github.fodroid:XDroid-Base:v1.4'
+	        compile 'com.github.fodroid:XDroid-Base:v1.5'
 }
 ```
 # 关于我们

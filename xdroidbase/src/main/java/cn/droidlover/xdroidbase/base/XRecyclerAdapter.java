@@ -124,13 +124,11 @@ public abstract class XRecyclerAdapter<T, F extends RecyclerView.ViewHolder> ext
     public void removeElements(List<T> elements) {
         if (data != null && elements != null && elements.size() > 0
                 && data.size() >= elements.size()) {
-
             for (T element : elements) {
                 if (data.contains(element)) {
                     data.remove(element);
                 }
             }
-
             notifyDataSetChanged();
         }
     }
@@ -204,6 +202,10 @@ public abstract class XRecyclerAdapter<T, F extends RecyclerView.ViewHolder> ext
     }
 
     public T getItemData(int position) {
+        return data.get(position);
+    }
+
+    public T getItem(int position) {
         return data.get(position);
     }
 

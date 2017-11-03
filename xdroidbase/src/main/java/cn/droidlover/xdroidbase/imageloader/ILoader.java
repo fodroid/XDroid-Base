@@ -10,7 +10,7 @@ import cn.droidlover.xdroidbase.XDroidBaseConf;
 /**
  * Created by wanglei on 2016/11/27.
  */
-
+@Deprecated
 public interface ILoader {
 
     void init(Context context);
