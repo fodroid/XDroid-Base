@@ -60,6 +60,7 @@ XDroidBaseConf.getInstance()
 ### v1.5.2
 * Kits中增加一些常用方法
 * 修复SharedPref中的bug
+* 增加一个AppUtils类
 ### v1.5.1
 * 优化一些命名
 ### v1.5
