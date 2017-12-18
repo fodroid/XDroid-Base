@@ -1,5 +1,7 @@
 package cn.droidlover.xdroidbase.kit;
 
+import android.animation.ValueAnimator;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -7,11 +9,18 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
@@ -35,6 +44,238 @@ import java.util.regex.Pattern;
  */
 
 public class Kits {
+
+    public static class Screen {
+        /**
+         * 获取屏幕宽度
+         *
+         * @return
+         */
+        public static int getScreenWidth(Context context) {
+            return context.getResources().getDisplayMetrics().widthPixels;
+        }
+
+        /**
+         * 获取屏幕高度
+         *
+         * @return
+         */
+        public static int getScreenHeight(Context context) {
+            return context.getResources().getDisplayMetrics().heightPixels;
+        }
+
+        public static int getStatusBarHeight(Context context) {
+            int result = 0;
+            int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+            if (resourceId > 0) {
+                result = context.getResources().getDimensionPixelSize(resourceId);
+            }
+            return result;
+        }
+
+        public static int getActionBarSize(Context context) {
+            TypedValue tv = new TypedValue();
+            if (context.getTheme().resolveAttribute(android.R.attr.actionBarSize, tv, true)) {
+                int actionBarHeight = TypedValue.complexToDimensionPixelSize(tv.data, context.getResources().getDisplayMetrics());
+                return actionBarHeight;
+            }
+            return 0;
+        }
+
+        /**
+         * 当前是否是横屏
+         *
+         * @param context context
+         * @return boolean
+         */
+        public static final boolean isLandscape(Context context) {
+            return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        }
+
+        /**
+         * 当前是否是竖屏
+         *
+         * @param context context
+         * @return boolean
+         */
+        public static final boolean isPortrait(Context context) {
+            return context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
+        }
+
+        /**
+         * 调整窗口的透明度  1.0f,0.5f 变暗
+         *
+         * @param from    from>=0&&from<=1.0f
+         * @param to      to>=0&&to<=1.0f
+         * @param context 当前的activity
+         */
+        public static void dimBackground(final float from, final float to, Activity context) {
+            final Window window = context.getWindow();
+            ValueAnimator valueAnimator = ValueAnimator.ofFloat(from, to);
+            valueAnimator.setDuration(500);
+            valueAnimator.addUpdateListener(
+                    new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            WindowManager.LayoutParams params = window.getAttributes();
+                            params.alpha = (Float) animation.getAnimatedValue();
+                            window.setAttributes(params);
+                        }
+                    });
+            valueAnimator.start();
+        }
+
+        /**
+         * 判断是否开启了自动亮度调节
+         *
+         * @param activity
+         * @return
+         */
+        public static boolean isAutoBrightness(Activity activity) {
+            boolean isAutoAdjustBright = false;
+            try {
+                isAutoAdjustBright = Settings.System.getInt(
+                        activity.getContentResolver(),
+                        Settings.System.SCREEN_BRIGHTNESS_MODE) == Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC;
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+            }
+            return isAutoAdjustBright;
+        }
+
+        /**
+         * 关闭亮度自动调节
+         *
+         * @param activity
+         */
+        public static void stopAutoBrightness(Activity activity) {
+            Settings.System.putInt(activity.getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS_MODE,
+                    Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+        }
+
+        /**
+         * 开启亮度自动调节
+         *
+         * @param activity
+         */
+
+        public static void startAutoBrightness(Activity activity) {
+            Settings.System.putInt(activity.getContentResolver(),
+                    Settings.System.SCREEN_BRIGHTNESS_MODE,
+                    Settings.System.SCREEN_BRIGHTNESS_MODE_AUTOMATIC);
+
+        }
+
+        /**
+         * 获得当前屏幕亮度值
+         *
+         * @return 0~100
+         */
+        public static int getScreenBrightness(Context context) {
+            return (int) (getScreenBrightnessInt255(context) / 255.0F * 100);
+        }
+
+        /**
+         * 获得当前屏幕亮度值
+         *
+         * @return 0~255
+         */
+        public static int getScreenBrightnessInt255(Context context) {
+            int screenBrightness = 255;
+            try {
+                screenBrightness = Settings.System.getInt(context.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return screenBrightness;
+        }
+
+        /**
+         * 设置当前屏幕亮度值
+         *
+         * @param paramInt 0~255
+         * @param mContext
+         */
+        public static void saveScreenBrightnessInt255(int paramInt, Context mContext) {
+            if (paramInt <= 5) {
+                paramInt = 5;
+            }
+            try {
+                Settings.System.putInt(mContext.getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, paramInt);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        /**
+         * 设置当前屏幕亮度值
+         *
+         * @param paramInt 0~100
+         * @param mContext
+         */
+        public static void saveScreenBrightnessInt100(int paramInt, Context mContext) {
+            saveScreenBrightnessInt255((int) (paramInt / 100.0F * 255), mContext);
+        }
+
+        /**
+         * 设置当前屏幕亮度值
+         *
+         * @param paramFloat 0~100
+         * @param mContext
+         */
+        public static void saveScreenBrightness(float paramFloat, Context mContext) {
+            saveScreenBrightnessInt255((int) (paramFloat / 100.0F * 255), mContext);
+        }
+
+        /**
+         * 设置Activity的亮度
+         *
+         * @param paramInt
+         * @param mActivity
+         */
+        public static void setScreenBrightness(int paramInt, Activity mActivity) {
+            if (paramInt <= 5) {
+                paramInt = 5;
+            }
+            Window localWindow = mActivity.getWindow();
+            WindowManager.LayoutParams localLayoutParams = localWindow.getAttributes();
+            float f = paramInt / 100.0F;
+            localLayoutParams.screenBrightness = f;
+            localWindow.setAttributes(localLayoutParams);
+        }
+
+        /**
+         * 测量view的尺寸，实际上view的最终尺寸会由于父布局传递来的MeasureSpec和view本身的LayoutParams共同决定
+         * 这里预先测量，由自己给出的MeasureSpec计算尺寸
+         *
+         * @param view
+         */
+        public static void measure(View view) {
+            int sizeWidth, sizeHeight, modeWidth, modeHeight;
+            ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
+            if (layoutParams == null) {
+                layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+            if (layoutParams.width == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                sizeWidth = 0;
+                modeWidth = View.MeasureSpec.UNSPECIFIED;
+            } else {
+                sizeWidth = layoutParams.width;
+                modeWidth = View.MeasureSpec.EXACTLY;
+            }
+            if (layoutParams.height == ViewGroup.LayoutParams.WRAP_CONTENT) {
+                sizeHeight = 0;
+                modeHeight = View.MeasureSpec.UNSPECIFIED;
+            } else {
+                sizeHeight = layoutParams.height;
+                modeHeight = View.MeasureSpec.EXACTLY;
+            }
+            view.measure(View.MeasureSpec.makeMeasureSpec(sizeWidth, modeWidth),
+                    View.MeasureSpec.makeMeasureSpec(sizeHeight, modeHeight)
+            );
+        }
+    }
 
     public static class Package {
         /**
@@ -227,6 +468,26 @@ public class Kits {
 
         public static int pxToDpCeilInt(Context context, float px) {
             return (int) (pxToDp(context, px) + 0.5f);
+        }
+
+        /**
+         * 将px值转换为sp值
+         *
+         * @param pxValue
+         * @return
+         */
+        public static float pxToSp(Context context, float pxValue) {
+            return pxValue / context.getResources().getDisplayMetrics().scaledDensity;
+        }
+
+        /**
+         * 将sp值转换为px值
+         *
+         * @param spValue
+         * @return
+         */
+        public static float spToPx(Context context, float spValue) {
+            return spValue * context.getResources().getDisplayMetrics().scaledDensity;
         }
     }
 

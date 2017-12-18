@@ -20,7 +20,7 @@ public class SharedPref implements ICache {
     private static SharedPref instance;
 
     public static void init(String spName) {
-        if (TextUtils.isEmpty(spName))
+        if (!TextUtils.isEmpty(spName))
             SP_NAME = spName;
     }
 

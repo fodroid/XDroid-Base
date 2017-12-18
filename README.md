@@ -57,6 +57,9 @@ XDroidBaseConf.getInstance()
 详细说明请前往[wiki](https://github.com/fodroid/XDroid-Base/wiki)
 
 # 更新
+### v1.5.2
+* Kits中增加一些常用方法
+* 修复SharedPref中的bug
 ### v1.5.1
 * 优化一些命名
 ### v1.5
@@ -117,7 +120,7 @@ allprojects {
 #### step2 添加依赖:
 ```groovy
 dependencies {
-	        compile 'com.github.fodroid:XDroid-Base:v1.5.1'
+	        compile 'com.github.fodroid:XDroid-Base:v1.5.2'
 }
 ```
 # 关于我们
