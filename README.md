@@ -57,6 +57,8 @@ XDroidBaseConf.getInstance()
 详细说明请前往[wiki](https://github.com/fodroid/XDroid-Base/wiki)
 
 # 更新
+### v1.5.3
+* 修复XRecyclerAdapter中的更新数据
 ### v1.5.2
 * Kits中增加一些常用方法
 * 修复SharedPref中的bug

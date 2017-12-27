@@ -76,7 +76,6 @@ public abstract class XRecyclerAdapter<T, V extends RecyclerView.ViewHolder> ext
             this.data.addAll(data);
             notifyItemRangeInserted(preSize, this.data.size());
         }
-        notifyDataSetChanged();
     }
 
     /**
@@ -99,7 +98,6 @@ public abstract class XRecyclerAdapter<T, V extends RecyclerView.ViewHolder> ext
             int position = data.indexOf(element);
             data.remove(element);
             notifyItemRemoved(position);
-            notifyDataSetChanged();
         }
     }
 
@@ -112,7 +110,6 @@ public abstract class XRecyclerAdapter<T, V extends RecyclerView.ViewHolder> ext
         if (data != null && data.size() > position) {
             data.remove(position);
             notifyItemRemoved(position);
-            notifyDataSetChanged();
         }
     }
 
